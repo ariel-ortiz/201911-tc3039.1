@@ -11,6 +11,8 @@ package mx.tec.tc3039.http;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Starts the web server and listens to client connections. Individual
@@ -27,10 +29,11 @@ public class WebServer {
 
         try (ServerSocket servSock = new ServerSocket(PORT_NUMBER)) {
 
+            Executor executor = Executors.newFixedThreadPool(5);
             while (true) {
                 Socket sock = servSock.accept();
                 Worker w = new Worker(sock);
-                new Thread(() -> w.doWork()).start();
+                executor.execute(() -> w.doWork());
             }
         } catch (IOException e) {
             e.printStackTrace();
