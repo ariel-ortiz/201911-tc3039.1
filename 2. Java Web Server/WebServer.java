@@ -30,7 +30,7 @@ public class WebServer {
             while (true) {
                 Socket sock = servSock.accept();
                 Worker w = new Worker(sock);
-                w.doWork();
+                new Thread(() -> w.doWork()).start();
             }
         } catch (IOException e) {
             e.printStackTrace();

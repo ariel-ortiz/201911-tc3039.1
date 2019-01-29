@@ -23,6 +23,12 @@ public class Worker {
     }
 
     public void doWork() {
+        
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
 
         String content = "Hello World!" + EOL;
 
